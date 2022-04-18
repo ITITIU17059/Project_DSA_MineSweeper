@@ -5,6 +5,7 @@ import java.awt.event.MouseMotionListener;
 
 import dev.quan.minesweeper.board.Board;
 
+// A CLASS FOR MOUSE MOVE
 public class MouseMove implements MouseMotionListener{
 
 	@Override

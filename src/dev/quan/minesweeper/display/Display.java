@@ -5,6 +5,7 @@ import java.awt.Dimension;
 
 import javax.swing.JFrame;
 
+// CREATE FRAME 
 public class Display {
 	
 	private JFrame frame;

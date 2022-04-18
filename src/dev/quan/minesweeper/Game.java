@@ -9,23 +9,32 @@ import dev.quan.minesweeper.states.State;
 import dev.quan.minesweeper.ui.MouseClick;
 import dev.quan.minesweeper.ui.MouseMove;
 
+// THE MAIN CLASS THAT WILL RUN THE GAME
 public class Game implements Runnable{
 	
 	private Display display;
 	
+	// TITLE, WIDT, HEIGHT OF THE FRAME
 	private String title;
 	private int width, height;
 	
+	// CREATE THREAD
 	private Thread thread;
 	private boolean running = false;
 	
+	// CREATE TOOLS FOR DRAWING
 	private BufferStrategy bs;
 	private Graphics g;
 	
+	// STATE
 	private State gameState;
 	
+	// MOUSE MANAGER
 	private MouseMove mouseMove;
 	private MouseClick mouseClick;
+
+	//HANDLER
+	private Handler handler;
 	
 	public Game(String title, int width, int height) {
 		this.width = width;
@@ -37,16 +46,22 @@ public class Game implements Runnable{
 	}
 
 	public void init() {
+		//ADD MOUSE MANAGER TO THE FRAME
 		display = new Display(title,width,height);
 		display.getJFrame().addMouseMotionListener(mouseMove);
 		display.getJFrame().addMouseListener(mouseClick);
 		display.getCanvas().addMouseMotionListener(mouseMove);
 		display.getCanvas().addMouseListener(mouseClick);
+
+		//CREATE HANDLER
+		handler = new Handler(this);
 		
-		gameState = new GameState();
+		//SET THE STATE OF THE GAME
+		gameState = new GameState(handler);
 		State.setState(gameState);
 	}
 
+	//RUN METHOD
 	@Override
 	public void run() {
 		
@@ -82,10 +97,12 @@ public class Game implements Runnable{
 		
 	}
 	
+	//TICK METHOD
 	public void tick() {
 		
 	}
 	
+	// RENDER METHOD
 	public void render() {
 		bs = display.getCanvas().getBufferStrategy();
 		if(bs==null) {
@@ -122,13 +139,21 @@ public class Game implements Runnable{
 		}
 	}
 	
-	//Getter and Setter
+	//GETTER AND SETTER
 	public int getWidth() {
 		return width;
 	}
 	
 	public int getHeight() {
 		return height;
-	}	
+	}
+	
+	public void setWidth(int width){
+		this.width = width;
+	}
+
+	public void setHeight(int height){
+		this.height = height;
+	}
 
 }
