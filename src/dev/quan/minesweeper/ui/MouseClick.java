@@ -3,7 +3,7 @@ package dev.quan.minesweeper.ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-// A CLASS FOR MOUSE CLICK
+// A CLASS FOR MOUSE CLICKclear
 public class MouseClick implements MouseListener{
 
 	@Override
