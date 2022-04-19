@@ -3,8 +3,13 @@ package dev.quan.minesweeper.ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import dev.quan.minesweeper.board.Board;
+
 // A CLASS FOR MOUSE CLICKclear
 public class MouseClick implements MouseListener{
+
+	private int mouseX, mouseY;
+	private Board board;
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
@@ -13,8 +18,10 @@ public class MouseClick implements MouseListener{
 
 	@Override
 	public void mousePressed(MouseEvent e) {
-		// TODO Auto-generated method stub
+		mouseX = e.getX();
+		mouseY = e.getY();
 		
+		board.mousePressed(e);
 	}
 
 	@Override
@@ -33,6 +40,10 @@ public class MouseClick implements MouseListener{
 	public void mouseExited(MouseEvent e) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	public void setBoard(Board board){
+		this.board = board;
 	}
 
 }

@@ -13,6 +13,7 @@ public class GameState extends State{
 	public GameState(Handler handler) {
 		super(handler);
 		board = new Board(handler);
+		handler.getGame().getMouseClick().setBoard(board);
 	}
 
 	@Override

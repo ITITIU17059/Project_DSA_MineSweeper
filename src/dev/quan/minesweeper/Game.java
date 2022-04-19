@@ -156,4 +156,8 @@ public class Game implements Runnable{
 		this.height = height;
 	}
 
+	public MouseClick getMouseClick(){
+		return mouseClick;
+	}
+
 }
