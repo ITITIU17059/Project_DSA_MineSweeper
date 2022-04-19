@@ -5,7 +5,7 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class Cell {
-    private boolean revealed = true;
+    private boolean revealed = false;
     private boolean hasbomb;
     private int x,y,w,i,j;
     private int neighborCount;
@@ -18,14 +18,6 @@ public class Cell {
         this.y = j*w;
         this.w = w;
         this.neighborCount = 0;
-        hasBomb();
-    }
-
-    public void hasBomb(){
-        if(rand.nextInt(100)<20)
-            hasbomb = true;
-        else
-            hasbomb = false;
     }
 
     public boolean contains(int xC, int yC){
@@ -34,11 +26,30 @@ public class Cell {
 
     public void reveal(){
         revealed = true;
+        if(neighborCount == 0){
+            floodFill();
+        }
+    }
+
+    public void floodFill(){
+        for(int xOff=-1; xOff<=1; xOff++){
+            for(int yOff=-1; yOff<=1; yOff++){
+                int a = i + xOff;
+                int b = j + yOff;
+                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
+                    Cell neighbor = Board.grid[a][b];
+                    if(!neighbor.hasbomb && !neighbor.revealed){
+                        neighbor.reveal();
+                    }
+                }
+            }
+        }
     }
     
     public int countBombs(){
         if(hasbomb){
-            return -1;
+            neighborCount = -1;
+            return neighborCount;
         }
         
         int total = 0;
@@ -73,10 +84,20 @@ public class Cell {
                 g.fillRect(x, y+80, w, w);
                 g.setColor(Color.white);
                 g.drawRect(x, y+80, w, w);
-                g.setFont(new Font("Courier New", 1, 17));
-                g.setColor(Color.red);
-                g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-1), y+80+w-20);
+                if(neighborCount!=0){
+                    g.setFont(new Font("Courier New", 1, 17));
+                    g.setColor(Color.red);
+                    g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-1), y+80+w-20);
+                }
             }
         }
+    }
+
+    public boolean getHasBomb(){
+        return hasbomb;
+    }
+
+    public void setHasBomb(boolean hasbomb){
+        this.hasbomb = hasbomb;
     }
 }
