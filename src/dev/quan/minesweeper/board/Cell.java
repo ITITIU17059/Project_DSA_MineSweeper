@@ -10,6 +10,7 @@ public class Cell {
     private int x,y,w,i,j;
     private int neighborCount;
     Random rand = new Random();
+    private int flag;
     private boolean isFlag;
     
     public Cell(int i, int j, int w){
@@ -33,7 +34,8 @@ public class Cell {
     }
 
     public void checkFlag(){
-        isFlag = true;
+        if(!revealed)
+            isFlag = true;
     }
 
     public void floodFill(){
@@ -43,8 +45,12 @@ public class Cell {
                 int b = j + yOff;
                 if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
                     Cell neighbor = Board.grid[a][b];
-                    if(!neighbor.hasbomb && !neighbor.revealed){
+                    if(!neighbor.hasbomb && !neighbor.revealed && !neighbor.isFlag){
                         neighbor.reveal();
+                    }
+                    if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
+                        neighbor.revealed = true;
+                        Board.gameOver();
                     }
                 }
             }
@@ -53,7 +59,7 @@ public class Cell {
     
     public int countBombs(){
         if(hasbomb){
-            neighborCount = -1;
+            neighborCount = 0;
             return neighborCount;
         }
         
@@ -73,6 +79,31 @@ public class Cell {
         neighborCount = total;
         return total;
     }
+
+    public int countFlags(){
+        if(hasbomb){
+            flag = 0;
+            return flag;
+        }
+        
+        int total = 0;
+
+        for(int xOff=-1; xOff<=1; xOff++){
+            for(int yOff=-1; yOff<=1; yOff++){
+                int a = i + xOff;
+                int b = j + yOff;
+                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
+                    Cell neighbor = Board.grid[a][b];
+                    if(neighbor.isFlag)
+                        total++;
+                }
+            }
+        }
+        flag = total;
+        return total;
+    }
+
+
 
     public void render(Graphics g){
         g.setColor(Color.blue);
@@ -98,7 +129,7 @@ public class Cell {
                     g.setColor(Color.red);
                     g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-1), y+80+w-20);
                 }
-                if(isFlag){
+                if(isFlag ){
                     g.setColor(Color.red);
                     g.drawLine(x, y+80, x+w, y+80+w);
                     g.drawLine(x+w, y+80, x, y+80+w);
@@ -121,5 +152,13 @@ public class Cell {
 
     public boolean getRevealed(){
         return revealed;
+    }
+
+    public int getNeighborCount(){
+        return neighborCount;
+    }
+
+    public int getFlag(){
+        return flag;
     }
 }

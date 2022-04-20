@@ -1,5 +1,6 @@
 package dev.quan.minesweeper;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -112,6 +113,8 @@ public class Game implements Runnable{
 		g = bs.getDrawGraphics();
 		
 		g.clearRect(0, 0, width, height);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, width, height);
 		
 		if(State.getState() != null)
 			State.getState().render(g);
