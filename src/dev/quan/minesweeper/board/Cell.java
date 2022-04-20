@@ -10,6 +10,7 @@ public class Cell {
     private int x,y,w,i,j;
     private int neighborCount;
     Random rand = new Random();
+    private boolean isFlag;
     
     public Cell(int i, int j, int w){
         this.i = i;
@@ -29,6 +30,10 @@ public class Cell {
         if(neighborCount == 0){
             floodFill();
         }
+    }
+
+    public void checkFlag(){
+        isFlag = true;
     }
 
     public void floodFill(){
@@ -74,6 +79,10 @@ public class Cell {
         g.fillRect(x, y+80, w, w);
         g.setColor(Color.white);
         g.drawRect(x, y+80, w, w);
+        if(isFlag){
+            g.setColor(Color.green);
+            g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
+        }
         if(revealed){
             if(hasbomb){
                 g.setColor(Color.black);
@@ -88,6 +97,11 @@ public class Cell {
                     g.setFont(new Font("Courier New", 1, 17));
                     g.setColor(Color.red);
                     g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-1), y+80+w-20);
+                }
+                if(isFlag){
+                    g.setColor(Color.red);
+                    g.drawLine(x, y+80, x+w, y+80+w);
+                    g.drawLine(x+w, y+80, x, y+80+w);
                 }
             }
         }

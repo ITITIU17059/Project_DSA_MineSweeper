@@ -13,7 +13,10 @@ public class MouseClick implements MouseListener{
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		
+		if(e.getClickCount()==2){
+			board.mouseClicked(e);
+		}
+
 	}
 
 	@Override
@@ -21,7 +24,10 @@ public class MouseClick implements MouseListener{
 		mouseX = e.getX();
 		mouseY = e.getY();
 		
-		board.mousePressed(e);
+		if(e.getButton() == MouseEvent.BUTTON1) // left mouse
+			board.mouseLeftPressed(e);
+		else if(e.getButton() == MouseEvent.BUTTON3) // right mouse
+			board.mouseRightPressed(e);
 	}
 
 	@Override

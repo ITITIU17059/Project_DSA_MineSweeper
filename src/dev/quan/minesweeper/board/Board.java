@@ -41,7 +41,7 @@ public class Board {
 		}
 	}
 
-	public void mousePressed(MouseEvent e){
+	public void mouseLeftPressed(MouseEvent e){
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
@@ -53,6 +53,20 @@ public class Board {
 				}
 			}
 		}
+	}
+
+	public void mouseRightPressed(MouseEvent e){
+		for(int i=0; i<cols; i++){
+			for(int j=0; j<rows; j++){
+				if(grid[i][j].contains(e.getX(), e.getY())){
+					grid[i][j].checkFlag();
+				}
+			}
+		}
+	}
+
+	public void mouseClicked(MouseEvent e){
+		
 	}
 
 	public void setup(){
