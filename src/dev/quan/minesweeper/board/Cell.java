@@ -114,4 +114,12 @@ public class Cell {
     public void setHasBomb(boolean hasbomb){
         this.hasbomb = hasbomb;
     }
+
+    public boolean getIsFlag(){
+        return isFlag;
+    }
+
+    public boolean getRevealed(){
+        return revealed;
+    }
 }

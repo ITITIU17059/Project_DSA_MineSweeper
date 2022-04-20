@@ -66,7 +66,13 @@ public class Board {
 	}
 
 	public void mouseClicked(MouseEvent e){
-		
+		for(int i=0; i<cols; i++){
+			for(int j=0; j<rows; j++){
+				if(grid[i][j].contains(e.getX(), e.getY())){
+					
+				}
+			}
+		}
 	}
 
 	public void setup(){
