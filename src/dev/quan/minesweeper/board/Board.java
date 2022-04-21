@@ -27,11 +27,14 @@ public class Board {
 	Date startDate = new Date();
 	private static boolean happiness;
 	public static Cell[][] grid;
-	private final int totalBomb = 10;
+	private final int totalBomb = 99;
+	private int totalFlag = totalBomb;
+	private boolean fLag_mark;
+	private int flagX = 5;
+	private int flagY = 5;
 	private Random rand = new Random();
 	private boolean victory = false;
 	private static boolean defeat = false;
-	private int noBomb = cols*rows - totalBomb;
 	private boolean resetter = false;
 
 
@@ -73,6 +76,8 @@ public class Board {
 
 		startDate = new Date();
 
+		totalFlag = totalBomb;
+
 		happiness = true;
 		victory = false;
 		defeat = false;
@@ -102,8 +107,8 @@ public class Board {
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
-					grid[i][j].reveal();
-					isVictory();
+					if(!grid[i][j].getIsFlag())						
+						grid[i][j].reveal();
 					
 					if(grid[i][j].getHasBomb()){
 						gameOver();
@@ -120,6 +125,11 @@ public class Board {
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
 					grid[i][j].checkFlag();
+					fLag_mark = grid[i][j].getIsFlag();
+					if(fLag_mark)
+						totalFlag--;
+					else
+						totalFlag++;
 				}
 			}
 		}
@@ -217,7 +227,22 @@ public class Board {
 			g.drawString("0"+Integer.toString(sec), timeX, timeY+65);
 		else
 			g.drawString(Integer.toString(sec), timeX, timeY+65);
-	}
+
+		//Count flag painting
+		
+		g.setColor(Color.WHITE);
+		g.fillRect(flagX, flagY, 140, 70);
+		if(totalFlag>totalBomb)
+			totalFlag = totalBomb;
+		g.setColor(Color.black);
+		g.setFont(new Font("Tahoma", Font.PLAIN, 80));
+		if(totalFlag<10)
+			g.drawString("00"+Integer.toString(totalFlag), flagX, flagY+65);
+		else if(totalFlag<100)
+			g.drawString("0"+Integer.toString(totalFlag), flagX, flagY+65);
+		else
+			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
+	}	
 
 	public boolean getResseter(){
 		return resetter;

@@ -34,7 +34,9 @@ public class Cell {
     }
 
     public void checkFlag(){
-        if(!revealed)
+        if(isFlag)
+            isFlag = false;
+        else if(!revealed)
             isFlag = true;
     }
 
@@ -148,7 +150,7 @@ public class Cell {
                     g.setFont(new Font("Tahoma", 1, 30));
                     g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-8), y+80+w-13);
                 }
-                if(isFlag ){
+                if(isFlag){
                     g.setColor(Color.red);
                     g.drawLine(x, y+80, x+w, y+80+w);
                     g.drawLine(x+w, y+80, x, y+80+w);
