@@ -125,9 +125,28 @@ public class Cell {
                 g.setColor(Color.white);
                 g.drawRect(x, y+80, w, w);
                 if(neighborCount!=0){
-                    g.setFont(new Font("Courier New", 1, 17));
-                    g.setColor(Color.red);
-                    g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-1), y+80+w-20);
+                switch(neighborCount){
+                    case(1):
+                        g.setColor(Color.blue);
+                        break;
+                    case(2):
+                        g.setColor(Color.green);
+                        break;
+                    case(3):
+                        g.setColor(Color.red);
+                        break;
+                    case(4):
+                        g.setColor(Color.CYAN);
+                        break;
+                    case(5):
+                        g.setColor(Color.orange);
+                        break;
+                    default:
+                        g.setColor(Color.pink);
+                        break;
+                }
+                    g.setFont(new Font("Tahoma", 1, 30));
+                    g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-8), y+80+w-13);
                 }
                 if(isFlag ){
                     g.setColor(Color.red);

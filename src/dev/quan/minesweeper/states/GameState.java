@@ -18,12 +18,14 @@ public class GameState extends State{
 
 	@Override
 	public void tick() {
-		
+
 	}
 
 	@Override
 	public void render(Graphics g) {
 		board.render(g);
+		if(!board.getResseter())
+			board.isVictory();
 	}
 
 }
