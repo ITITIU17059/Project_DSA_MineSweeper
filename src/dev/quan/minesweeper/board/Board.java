@@ -12,29 +12,49 @@ import dev.quan.minesweeper.Handler;
 
 public class Board {
 	
-	public static int mx, my;
+	// Width of the cell
 	private int w = 50;
+
+	// Handler
 	private Handler handler;
+
+	// Colums and rows of the board
 	public static final int cols = 30;
 	public static final int rows = 16;
+
+	// Smiley face variables
 	private int smileyX = 725;
 	private int smileyY = 5;
 	private int smileyCenterX = smileyX + 35;
 	private int smileyCenterY = smileyY + 35;
+	private static boolean happiness;
+
+	//time counter variables
 	private int timeX = 1340;
 	private int timeY = 5;
 	private int sec = 0;
 	Date startDate = new Date();
-	private static boolean happiness;
+
+	// array of grid
 	public static Cell[][] grid;
+
+	// Total bomb 
 	private final int totalBomb = 99;
+
+	// Flag counter variables
 	private int totalFlag = totalBomb;
 	private boolean fLag_mark;
 	private int flagX = 5;
 	private int flagY = 5;
+	
+	// Random variable
 	private Random rand = new Random();
+
+	// Win condition
 	private boolean victory = false;
 	private static boolean defeat = false;
+
+	// Reset variable
 	private boolean resetter = false;
 
 
@@ -44,6 +64,7 @@ public class Board {
 		setup();
 	}
 	
+	// Create grid array
 	public Cell[][] make2DArray(int cols, int rows){
 		Cell[][] arr = new Cell[cols][rows];
 		return arr;
@@ -53,6 +74,7 @@ public class Board {
 
 	}
 
+	// Game over function
 	public static void gameOver(){
 		happiness = false;
 		defeat = true;
@@ -63,6 +85,7 @@ public class Board {
 		}
 	}
 
+	// Check if the mouse is in smiley face
 	public boolean inSmile(int x, int y){
 		int dif = (int)Math.sqrt(Math.abs(x-smileyCenterX)*Math.abs(x-smileyCenterX)+
 		Math.abs(y-smileyCenterY)*Math.abs(y-smileyCenterY));
@@ -71,6 +94,7 @@ public class Board {
 		return false;
 	}
 
+	// reset function
 	public void resetAll(){
 		resetter = true;
 
@@ -86,12 +110,14 @@ public class Board {
 		resetter = false;
 	}
 
+	// win condition
 	public void isVictory(){
 		if(totalRevealed()+totalBomb==cols*rows){
 			victory = true;
 		}
 	}
 
+	// Total cell that is reveal
 	public int totalRevealed(){
 		int isRevealed = 0;
 		for(int i=0; i<cols; i++){
@@ -103,6 +129,7 @@ public class Board {
 		return isRevealed;
 	}
 
+	// Left mouse press
 	public void mouseLeftPressed(MouseEvent e){
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
@@ -120,6 +147,7 @@ public class Board {
 			resetAll();
 	}
 
+	// Right mouse press
 	public void mouseRightPressed(MouseEvent e){
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
@@ -135,6 +163,7 @@ public class Board {
 		}
 	}
 
+	// Mouse click
 	public void mouseClicked(MouseEvent e){
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
@@ -148,7 +177,10 @@ public class Board {
 		}
 	}
 
+	// Set up for the grid
 	public void setup(){
+
+		//add cell to grid
 		grid = make2DArray(cols, rows);
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
@@ -156,6 +188,7 @@ public class Board {
 			}
 		}
 
+		// List all the index of the cell
 		ArrayList<int[]> options = new ArrayList<int[]>();
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
@@ -164,6 +197,7 @@ public class Board {
 			}
 		}
 
+		// Randomly setting the bomb to the cell
 		for(int n=0; n<totalBomb; n++){
 			int size = options.size();
 			int index = rand.nextInt(size);
@@ -174,7 +208,7 @@ public class Board {
 			grid[i][j].setHasBomb(true);
 		}
 
-
+		// Check the neighbor of all the cell has bomb all not
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				grid[i][j].countBombs();
@@ -183,18 +217,21 @@ public class Board {
 	}
 	
 	public void render(Graphics g) {
+		
+		// Draw the cell
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				grid[i][j].render(g);
 			}
 		}
+
+		// Smiley face painting
+
 		g.setColor(Color.yellow);
 		g.fillOval(smileyX, smileyY, 70, 70);
 		g.setColor(Color.black);
 		g.fillOval(smileyX+15, smileyY+20, 10, 10);
 		g.fillOval(smileyX+45, smileyY+20, 10, 10);
-
-		// Smiley face painting
 		
 		if(happiness){
 			g.fillRect(smileyX+20, smileyY+50, 30, 5);
@@ -244,6 +281,7 @@ public class Board {
 			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
 	}	
 
+	// Getter and setter
 	public boolean getResseter(){
 		return resetter;
 	}

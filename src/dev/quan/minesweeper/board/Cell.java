@@ -5,14 +5,23 @@ import java.awt.Graphics;
 import java.util.Random;
 
 public class Cell {
+
+    //Cell has bomb or flag or nothing
     private boolean revealed = false;
     private boolean hasbomb;
+    
+    // Cell variables
     private int x,y,w,i,j;
+
+    // Variable of total bombs that near the current cell
     private int neighborCount;
     Random rand = new Random();
+
+    // Flag variables
     private int flag;
     private boolean isFlag;
     
+    // Constructor
     public Cell(int i, int j, int w){
         this.i = i;
         this.j = j;
@@ -22,10 +31,12 @@ public class Cell {
         this.neighborCount = 0;
     }
 
+    // Check if the mouse is in the cell
     public boolean contains(int xC, int yC){
         return (xC>x && xC<x+w && yC>y+80 && yC<y+80+w);
     }
 
+    // Make the cell revealed
     public void reveal(){
         revealed = true;
         if(neighborCount == 0){
@@ -33,6 +44,7 @@ public class Cell {
         }
     }
 
+    // flag setting for right click 
     public void checkFlag(){
         if(isFlag)
             isFlag = false;
@@ -40,6 +52,7 @@ public class Cell {
             isFlag = true;
     }
 
+    // Expand the cell function
     public void floodFill(){
         for(int xOff=-1; xOff<=1; xOff++){
             for(int yOff=-1; yOff<=1; yOff++){
@@ -59,6 +72,7 @@ public class Cell {
         }
     }
     
+    // Return the total neighbor's bomb 
     public int countBombs(){
         if(hasbomb){
             neighborCount = 0;
@@ -82,6 +96,7 @@ public class Cell {
         return total;
     }
 
+    // Return the total neighbor's flag 
     public int countFlags(){
         if(hasbomb){
             flag = 0;
@@ -108,24 +123,34 @@ public class Cell {
 
 
     public void render(Graphics g){
+
+        // Draw cells
         g.setColor(Color.blue);
         g.fillRect(x, y+80, w, w);
         g.setColor(Color.white);
         g.drawRect(x, y+80, w, w);
+
+        // Draw flags
         if(isFlag){
             g.setColor(Color.green);
             g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
         }
         if(revealed){
+            
+            // Draw bombs
             if(hasbomb){
                 g.setColor(Color.black);
                 g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
             }
             else{
+
+                // Draw cells that have neighborCount = 0
                 g.setColor(Color.lightGray);
                 g.fillRect(x, y+80, w, w);
                 g.setColor(Color.white);
                 g.drawRect(x, y+80, w, w);
+
+                // Draw numbers
                 if(neighborCount!=0){
                 switch(neighborCount){
                     case(1):
@@ -150,6 +175,8 @@ public class Cell {
                     g.setFont(new Font("Tahoma", 1, 30));
                     g.drawString(Integer.toString(neighborCount), (int)(x + w*0.5-8), y+80+w-13);
                 }
+
+                // Draw the cross
                 if(isFlag){
                     g.setColor(Color.red);
                     g.drawLine(x, y+80, x+w, y+80+w);
@@ -159,6 +186,7 @@ public class Cell {
         }
     }
 
+    // Getters and Setters
     public boolean getHasBomb(){
         return hasbomb;
     }
