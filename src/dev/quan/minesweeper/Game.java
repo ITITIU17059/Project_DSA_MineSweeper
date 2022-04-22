@@ -1,5 +1,6 @@
 package dev.quan.minesweeper;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
@@ -16,7 +17,6 @@ public class Game implements Runnable{
 	
 	// TITLE, WIDT, HEIGHT OF THE FRAME
 	private String title;
-	private int width, height;
 	
 	// CREATE THREAD
 	private Thread thread;
@@ -36,9 +36,7 @@ public class Game implements Runnable{
 	//HANDLER
 	private Handler handler;
 	
-	public Game(String title, int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Game(String title) {
 		this.title = title;
 		
 		mouseMove = new MouseMove();
@@ -47,18 +45,19 @@ public class Game implements Runnable{
 
 	public void init() {
 		//ADD MOUSE MANAGER TO THE FRAME
-		display = new Display(title,width,height);
-		display.getJFrame().addMouseMotionListener(mouseMove);
-		display.getJFrame().addMouseListener(mouseClick);
-		display.getCanvas().addMouseMotionListener(mouseMove);
-		display.getCanvas().addMouseListener(mouseClick);
-
-		//CREATE HANDLER
+		display = new Display(title);
 		handler = new Handler(this);
+		handler.setDisplay(display);
 		
 		//SET THE STATE OF THE GAME
 		gameState = new GameState(handler);
 		State.setState(gameState);
+		handler.getDisplay().createDisplay();
+
+		display.getJFrame().addMouseMotionListener(mouseMove);
+		display.getJFrame().addMouseListener(mouseClick);
+		display.getCanvas().addMouseMotionListener(mouseMove);
+		display.getCanvas().addMouseListener(mouseClick);
 	}
 
 	//RUN METHOD
@@ -111,7 +110,9 @@ public class Game implements Runnable{
 		}
 		g = bs.getDrawGraphics();
 		
-		g.clearRect(0, 0, width, height);
+		g.clearRect(0, 0, handler.getDisplay().getWidth(), handler.getDisplay().getHeight());
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, handler.getDisplay().getWidth(), handler.getDisplay().getHeight());
 		
 		if(State.getState() != null)
 			State.getState().render(g);
@@ -140,20 +141,9 @@ public class Game implements Runnable{
 	}
 	
 	//GETTER AND SETTER
-	public int getWidth() {
-		return width;
-	}
-	
-	public int getHeight() {
-		return height;
-	}
-	
-	public void setWidth(int width){
-		this.width = width;
-	}
 
-	public void setHeight(int height){
-		this.height = height;
+	public MouseClick getMouseClick(){
+		return mouseClick;
 	}
 
 }
