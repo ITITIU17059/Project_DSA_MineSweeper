@@ -16,8 +16,7 @@ public class MouseMove implements MouseMotionListener{
 
 	@Override
 	public void mouseMoved(MouseEvent e) {
-		Board.mx = e.getX();
-		Board.my = e.getY();
+
 	}
 
 }

@@ -12,17 +12,20 @@ public class GameState extends State{
 	
 	public GameState(Handler handler) {
 		super(handler);
-		board = new Board();
+		board = new Board(handler);
+		handler.getGame().getMouseClick().setBoard(board);
 	}
 
 	@Override
 	public void tick() {
-		
+
 	}
 
 	@Override
 	public void render(Graphics g) {
 		board.render(g);
+		if(!board.getResseter())
+			board.isVictory();
 	}
 
 }
