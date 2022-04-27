@@ -23,6 +23,7 @@ public abstract class Board {
     protected int totalFlag;
     protected Date startDate;
     private static Board currentBoard = null;
+	protected int currentgridX, currentgridY;
 
     // Handler
 	protected Handler handler;
@@ -60,7 +61,7 @@ public abstract class Board {
 		defeat = true;
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
-				grid[i][j].reveal();
+				grid[i][j].reveal(rows, cols, grid);
 			}
 		}
     }
@@ -106,10 +107,12 @@ public abstract class Board {
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
-					if(!grid[i][j].getIsFlag())						
-						grid[i][j].reveal();
-					
-					if(grid[i][j].getHasBomb()){
+					if(!grid[i][j].getIsFlag()){						
+						grid[i][j].reveal(rows, cols, grid);
+						currentgridX = i;
+						currentgridY = j;
+					}
+					if(grid[i][j].getHasBomb() && !grid[i][j].getIsFlag()){
 						gameOver();
 					}
 				}
@@ -140,9 +143,9 @@ public abstract class Board {
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
-					grid[i][j].countFlags();
+					grid[i][j].countFlags(rows, cols, grid);
 					if(grid[i][j].getRevealed() && grid[i][j].getNeighborCount()>0 && grid[i][j].getFlag()==grid[i][j].getNeighborCount()){
-						grid[i][j].floodFill();
+						grid[i][j].floodFill(rows, cols, grid);
 					}
 				}
 			}
@@ -183,7 +186,7 @@ public abstract class Board {
 		// Check the neighbor of all the cell has bomb all not
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
-				grid[i][j].countBombs();
+				grid[i][j].countBombs(rows, cols, grid);
 			}
 		}
 	}

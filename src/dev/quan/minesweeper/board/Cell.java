@@ -40,10 +40,10 @@ public class Cell {
     }
 
     // Make the cell revealed
-    public void reveal(){
+    public void reveal(int rows, int cols, Cell[][] grid){
         revealed = true;
         if(neighborCount == 0){
-            floodFill();
+            floodFill(rows, cols, grid);
         }
     }
 
@@ -56,15 +56,15 @@ public class Cell {
     }
 
     // Expand the cell function
-    public void floodFill(){
+    public void floodFill(int rows, int cols, Cell[][] grid){
         for(int xOff=-1; xOff<=1; xOff++){
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
-                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
-                    Cell neighbor = Board.grid[a][b];
+                if(a>-1 && a<cols && b>-1 && b<rows){
+                    Cell neighbor = grid[a][b];
                     if(!neighbor.hasbomb && !neighbor.revealed && !neighbor.isFlag){
-                        neighbor.reveal();
+                        neighbor.reveal(rows, cols, grid);
                     }
                     if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
                         neighbor.revealed = true;
@@ -76,7 +76,7 @@ public class Cell {
     }
     
     // Return the total neighbor's bomb 
-    public int countBombs(){
+    public int countBombs(int rows, int cols, Cell[][] grid){
         if(hasbomb){
             neighborCount = 0;
             return neighborCount;
@@ -88,8 +88,8 @@ public class Cell {
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
-                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
-                    Cell neighbor = Board.grid[a][b];
+                if(a>-1 && a<cols && b>-1 && b<rows){
+                    Cell neighbor = grid[a][b];
                     if(neighbor.hasbomb)
                         total++;
                 }
@@ -100,7 +100,7 @@ public class Cell {
     }
 
     // Return the total neighbor's flag 
-    public int countFlags(){
+    public int countFlags(int rows, int cols, Cell[][] grid){
         if(hasbomb){
             flag = 0;
             return flag;
@@ -112,8 +112,8 @@ public class Cell {
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
-                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
-                    Cell neighbor = Board.grid[a][b];
+                if(a>-1 && a<cols && b>-1 && b<rows){
+                    Cell neighbor = grid[a][b];
                     if(neighbor.isFlag)
                         total++;
                 }

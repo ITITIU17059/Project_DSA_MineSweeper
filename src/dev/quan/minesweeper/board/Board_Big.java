@@ -16,17 +16,20 @@ public class Board_Big extends Board{
 	private int smileyCenterY = smileyY + 35;
 
 	//time counter variables
-	private int timeX = 1340;
+	private int timeX = 1361;
 	private int timeY = 5;
-	private int totalFlag;
+
+	//undo variables
+	private int undoX = 1512;
+	private int undoY = 80;
 
 	public Board_Big(Handler handler){
 		super(handler, 30, 16);
 		totalBomb = 99;
 		totalFlag = totalBomb;
 		startDate = new Date();
-		handler.getDisplay().setWidth(1500);
-		handler.getDisplay().setHeight(800);
+		handler.getDisplay().setWidth(1601);
+		handler.getDisplay().setHeight(881);
 		setup();
 	}
 	
@@ -96,8 +99,10 @@ public class Board_Big extends Board{
 		
 		g.setColor(Color.WHITE);
 		g.fillRect(flagX, flagY, 140, 70);
-		if(totalFlag>totalBomb)
+		if(totalFlag>totalBomb){
 			totalFlag = totalBomb;
+		}
+		System.out.println(totalFlag);
 		g.setColor(Color.black);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 80));
 		if(totalFlag<10)
@@ -106,6 +111,11 @@ public class Board_Big extends Board{
 			g.drawString("0"+Integer.toString(totalFlag), flagX, flagY+65);
 		else
 			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
+
+		// undo button painting
+		g.setColor(Color.white);
+		g.fillOval(undoX, undoY, 75, 75);
+		// g.drawImage(undo.png, 1515, 83, 25, 25, null);
 	}	
 
 }

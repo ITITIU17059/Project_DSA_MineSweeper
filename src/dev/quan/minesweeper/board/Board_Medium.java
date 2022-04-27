@@ -4,29 +4,26 @@ import java.awt.Graphics;
 import java.util.Date;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
 
 import dev.quan.minesweeper.Handler;
 
-public class Board_Small extends Board{
-
+public class Board_Medium extends Board{
     // Smiley face variables
-	private int smileyX = 200;
+	private int smileyX = 375;
 	private int smileyY = 5;
 	private int smileyCenterX = smileyX + 35;
 	private int smileyCenterY = smileyY + 35;
 
 	//time counter variables
-	private int timeX = 311;
+	private int timeX = 661;
 	private int timeY = 5;
 
-
-	public Board_Small(Handler handler){
-		super(handler, 9, 9);
-		totalBomb = 10;
+	public Board_Medium(Handler handler){
+		super(handler, 16, 16);
+		totalBomb = 40;
 		totalFlag = totalBomb;
 		startDate = new Date();
-		handler.getDisplay().setWidth(551);
+		handler.getDisplay().setWidth(901);
 		handler.getDisplay().setHeight(531);
 		setup();
 	}
@@ -107,6 +104,5 @@ public class Board_Small extends Board{
 			g.drawString("0"+Integer.toString(totalFlag), flagX, flagY+65);
 		else
 			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
-	}	
-    
+	}
 }
