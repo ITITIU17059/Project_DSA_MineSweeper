@@ -2,6 +2,7 @@ package dev.quan.minesweeper.board;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Cell {
@@ -20,6 +21,8 @@ public class Cell {
     // Flag variables
     private int flag;
     private boolean isFlag;
+
+    public static ArrayList<int[]> undoCell = new ArrayList<int[]>();
 
     private Board Board;
     
@@ -65,6 +68,8 @@ public class Cell {
                     Cell neighbor = grid[a][b];
                     if(!neighbor.hasbomb && !neighbor.revealed && !neighbor.isFlag){
                         neighbor.reveal(rows, cols, grid);
+                        int ar[] = {a,b};
+                        undoCell.add(ar);
                     }
                     if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
                         neighbor.revealed = true;
@@ -204,6 +209,10 @@ public class Cell {
 
     public boolean getRevealed(){
         return revealed;
+    }
+
+    public void setRevealed(boolean revealed){
+        this.revealed = revealed;
     }
 
     public int getNeighborCount(){

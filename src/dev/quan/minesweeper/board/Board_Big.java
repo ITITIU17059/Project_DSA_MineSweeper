@@ -22,10 +22,13 @@ public class Board_Big extends Board{
 	//undo variables
 	private int undoX = 1512;
 	private int undoY = 80;
+	private int undoCenterX = undoX + 37;
+	private int undoCenterY = undoY + 37;
+
 
 	public Board_Big(Handler handler){
 		super(handler, 30, 16);
-		totalBomb = 99;
+		totalBomb = 30;
 		totalFlag = totalBomb;
 		startDate = new Date();
 		handler.getDisplay().setWidth(1601);
@@ -42,6 +45,14 @@ public class Board_Big extends Board{
 		int dif = (int)Math.sqrt(Math.abs(x-smileyCenterX)*Math.abs(x-smileyCenterX)+
 		Math.abs(y-smileyCenterY)*Math.abs(y-smileyCenterY));
 		if(dif<35)
+			return true;
+		return false;
+	}
+
+	public boolean inUndo(int x, int y){
+		int dif = (int)Math.sqrt(Math.abs(x-undoCenterX)*Math.abs(x-undoCenterX)+
+		Math.abs(y-undoCenterY)*Math.abs(y-undoCenterY));
+		if(dif<37)
 			return true;
 		return false;
 	}
@@ -102,7 +113,6 @@ public class Board_Big extends Board{
 		if(totalFlag>totalBomb){
 			totalFlag = totalBomb;
 		}
-		System.out.println(totalFlag);
 		g.setColor(Color.black);
 		g.setFont(new Font("Tahoma", Font.PLAIN, 80));
 		if(totalFlag<10)
@@ -114,7 +124,7 @@ public class Board_Big extends Board{
 
 		// undo button painting
 		g.setColor(Color.white);
-		g.fillOval(undoX, undoY, 75, 75);
+		g.fillOval(undoX, undoY, 74, 74);
 		// g.drawImage(undo.png, 1515, 83, 25, 25, null);
 	}	
 

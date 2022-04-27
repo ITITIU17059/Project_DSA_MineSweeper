@@ -3,6 +3,7 @@ package dev.quan.minesweeper.board;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
+import java.util.Stack;
 import java.awt.event.MouseEvent;
 import java.awt.Graphics;
 
@@ -23,7 +24,9 @@ public abstract class Board {
     protected int totalFlag;
     protected Date startDate;
     private static Board currentBoard = null;
-	protected int currentgridX, currentgridY;
+	protected int[] arrGrid = new int[2];
+	protected Stack<int[]> stackGrid = new Stack<int[]>();
+	protected Stack<ArrayList<int[]>> stackList = new Stack<ArrayList<int[]>>();
 
     // Handler
 	protected Handler handler;
@@ -55,6 +58,8 @@ public abstract class Board {
     
     public abstract void render(Graphics g);
 
+	public abstract boolean inUndo(int x, int y);
+
    	// Game over function
 	public static void gameOver(){
 		happiness = false;
@@ -77,6 +82,7 @@ public abstract class Board {
 		happiness = true;
 		victory = false;
 		defeat = false;
+		stackGrid.clear();
 		setup();
 
 		resetter = false;
@@ -102,24 +108,46 @@ public abstract class Board {
 		return isRevealed;
 	}
 
+	public void undo(){
+		if(stackGrid.empty())
+			return;
+		int a[] = stackGrid.pop();
+		grid[a[0]][a[1]].setRevealed(false);
+		if(!stackList.empty()){
+			ArrayList<int[]> arr = stackList.pop();
+			for(int[] ar : arr){
+				grid[ar[0]][ar[1]].setRevealed(false);
+			}
+	}
+	}
+
     // Left mouse press
 	public void mouseLeftPressed(MouseEvent e){
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
-					if(!grid[i][j].getIsFlag()){						
+					if(!grid[i][j].getIsFlag()){	
+						if(!Cell.undoCell.isEmpty())
+							Cell.undoCell.clear();		
 						grid[i][j].reveal(rows, cols, grid);
-						currentgridX = i;
-						currentgridY = j;
+						int[] a = {i,j};
+					    stackGrid.push(a);
+						if(!Cell.undoCell.isEmpty())
+							stackList.push(Cell.undoCell);
+						System.out.println(stackList);
 					}
 					if(grid[i][j].getHasBomb() && !grid[i][j].getIsFlag()){
 						gameOver();
+						stackGrid.clear();
 					}
 				}
 			}
 		}
 		if(inSmile(e.getX(), e.getY()))
 			resetAll();
+		
+		if(inUndo(e.getX(), e.getY()))
+			undo();
 	}
 
     // Right mouse press
