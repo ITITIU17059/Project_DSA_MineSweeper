@@ -3,18 +3,17 @@ package dev.quan.minesweeper.ui;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
-import dev.quan.minesweeper.board.Board;
-import dev.quan.minesweeper.board.Board_Big;
+import dev.quan.minesweeper.states.State;
 
-// A CLASS FOR MOUSE CLICKclear
+// A CLASS FOR MOUSE CLICK
 public class MouseClick implements MouseListener{
 
-	private Board board;
+	private State state;
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount()==2){
-			board.mouseClicked(e);
+			state.mouseClicked(e);
 		}
 
 	}
@@ -22,9 +21,9 @@ public class MouseClick implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 		if(e.getButton() == MouseEvent.BUTTON1) // left mouse
-			board.mouseLeftPressed(e);
+			state.mouseLeftPressed(e);
 		else if(e.getButton() == MouseEvent.BUTTON3) // right mouse
-			board.mouseRightPressed(e);
+			state.mouseRightPressed(e);
 	}
 
 	@Override
@@ -45,8 +44,8 @@ public class MouseClick implements MouseListener{
 		
 	}
 
-	public void setBoard(Board board){
-		this.board = board;
+	public void setState(State state){
+		this.state = state;
 	}
 
 }

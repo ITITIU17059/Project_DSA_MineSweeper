@@ -28,7 +28,7 @@ public class Board_Big extends Board{
 
 	public Board_Big(Handler handler){
 		super(handler, 30, 16);
-		totalBomb = 30;
+		totalBomb = 99;
 		totalFlag = totalBomb;
 		startDate = new Date();
 		handler.getDisplay().setWidth(1601);
@@ -125,7 +125,6 @@ public class Board_Big extends Board{
 		// undo button painting
 		g.setColor(Color.white);
 		g.fillOval(undoX, undoY, 74, 74);
-		// g.drawImage(undo.png, 1515, 83, 25, 25, null);
 	}	
 
 }

@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.util.Date;
 import java.awt.Color;
 import java.awt.Font;
-import java.awt.event.MouseEvent;
 
 import dev.quan.minesweeper.Handler;
 
@@ -21,7 +20,7 @@ public class Board_Small extends Board{
 	private int timeY = 5;
 
 	//undo variables
-	private int undoX = 1512;
+	private int undoX = 462;
 	private int undoY = 80;
 	private int undoCenterX = undoX + 37;
 	private int undoCenterY = undoY + 37;
@@ -122,6 +121,10 @@ public class Board_Small extends Board{
 			g.drawString("0"+Integer.toString(totalFlag), flagX, flagY+65);
 		else
 			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
+
+		// undo button painting
+		g.setColor(Color.white);
+		g.fillOval(undoX, undoY, 74, 74);
 	}	
     
 }

@@ -7,12 +7,13 @@ import dev.quan.minesweeper.board.Board;
 import dev.quan.minesweeper.board.Board_Big;
 import dev.quan.minesweeper.board.Board_Medium;
 import dev.quan.minesweeper.board.Board_Small;
+import java.awt.event.MouseEvent;
 
 // GAMESTATE FOR THE GAME(ADD MENUSTATE AND SCORE STATE LATER)
 public class GameState extends State{
 	
 	private Board board;
-	private int count = 1;
+	private int count = 2;
 	
 	public GameState(Handler handler) {
 		super(handler);
@@ -24,8 +25,7 @@ public class GameState extends State{
 		else
 			board = new Board_Small(handler);
 		Board.setBoard(board);
-		System.out.println(Board.getBoard().getCols());
-		handler.getGame().getMouseClick().setBoard(Board.getBoard());
+		handler.getGame().getMouseClick().setState(this);
 	}
 
 	@Override
@@ -38,6 +38,18 @@ public class GameState extends State{
 		Board.getBoard().render(g);
 		if(!Board.getBoard().getResseter())
 			Board.getBoard().isVictory();
+	}
+
+	public void mouseLeftPressed(MouseEvent e){
+		Board.getBoard().mouseLeftPressed(e);
+	}
+
+	public void mouseRightPressed(MouseEvent e){
+		Board.getBoard().mouseRightPressed(e);
+	}
+
+	public void mouseClicked(MouseEvent e){
+		Board.getBoard().mouseClicked(e);
 	}
 
 }
