@@ -25,8 +25,8 @@ public abstract class Board {
     protected Date startDate;
     private static Board currentBoard = null;
 	protected int[] arrGrid = new int[2];
-	protected Stack<int[]> stackGrid = new Stack<int[]>();
-	protected Stack<ArrayList<int[]>> stackList = new Stack<ArrayList<int[]>>();
+	protected Stack<int[]> stackGrid;
+	protected Stack<Integer> stackList;
 
     // Handler
 	protected Handler handler;
@@ -42,6 +42,8 @@ public abstract class Board {
         this.handler = handler;
         Board.rows = rows;
         Board.cols = cols;
+		stackGrid = new Stack<int[]>();
+		stackList = new Stack<Integer>();
         happiness = true;
     }
 
@@ -83,6 +85,7 @@ public abstract class Board {
 		victory = false;
 		defeat = false;
 		stackGrid.clear();
+		stackList.clear();
 		setup();
 
 		resetter = false;
@@ -112,13 +115,12 @@ public abstract class Board {
 		if(stackGrid.empty())
 			return;
 		int a[] = stackGrid.pop();
+		int count = stackList.pop();
 		grid[a[0]][a[1]].setRevealed(false);
-		if(!stackList.empty()){
-			ArrayList<int[]> arr = stackList.pop();
-			for(int[] ar : arr){
-				grid[ar[0]][ar[1]].setRevealed(false);
-			}
-	}
+		for(int i=0; i<count; i++){
+			int b[] = Cell.undoCell.pop();
+			grid[b[0]][b[1]].setRevealed(false);
+		}
 	}
 
     // Left mouse press
@@ -126,19 +128,17 @@ public abstract class Board {
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
 				if(grid[i][j].contains(e.getX(), e.getY())){
-					if(!grid[i][j].getIsFlag()){	
-						if(!Cell.undoCell.isEmpty())
-							Cell.undoCell.clear();		
+					if(!grid[i][j].getIsFlag()){			
 						grid[i][j].reveal(rows, cols, grid);
+						stackList.push(Cell.count);
+						Cell.count = 0;
 						int[] a = {i,j};
 					    stackGrid.push(a);
-						if(!Cell.undoCell.isEmpty())
-							stackList.push(Cell.undoCell);
-						System.out.println(stackList);
 					}
 					if(grid[i][j].getHasBomb() && !grid[i][j].getIsFlag()){
 						gameOver();
 						stackGrid.clear();
+						stackList.clear();
 					}
 				}
 			}
