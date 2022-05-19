@@ -3,6 +3,7 @@ package dev.quan.minesweeper.board;
 import java.awt.Graphics;
 import java.util.Date;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 
 import dev.quan.minesweeper.Handler;
@@ -32,8 +33,10 @@ public class Board_Small extends Board{
 		totalBomb = 10;
 		totalFlag = totalBomb;
 		startDate = new Date();
-		handler.getDisplay().setWidth(551);
-		handler.getDisplay().setHeight(531);
+		handler.getDisplay().getJFrame().setSize(551,571);
+		handler.getDisplay().getCanvas().setPreferredSize(new Dimension(551,331));
+		handler.getDisplay().getCanvas().setFocusable(true);
+		handler.getDisplay().getJFrame().setLocationRelativeTo(null);
 		setup();
 	}
 	

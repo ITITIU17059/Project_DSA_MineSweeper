@@ -13,10 +13,12 @@ import java.awt.event.MouseEvent;
 public class GameState extends State{
 	
 	private Board board;
-	private int count = 2;
 	
 	public GameState(Handler handler) {
 		super(handler);
+	}
+
+	public void setLevel(int count){
 		if(count==1)
 			board = new Board_Big(handler);
 		else if(count==2){
@@ -25,7 +27,6 @@ public class GameState extends State{
 		else
 			board = new Board_Small(handler);
 		Board.setBoard(board);
-		handler.getGame().getMouseClick().setState(this);
 	}
 
 	@Override

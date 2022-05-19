@@ -34,5 +34,7 @@ public abstract class State {
 	public abstract void mouseRightPressed(MouseEvent e);
 
 	public abstract void mouseClicked(MouseEvent e);
+
+	public abstract void setLevel(int count);
 	
 }

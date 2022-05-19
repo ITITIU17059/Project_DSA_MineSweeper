@@ -6,6 +6,8 @@ import java.awt.image.BufferStrategy;
 
 import dev.quan.minesweeper.display.Display;
 import dev.quan.minesweeper.states.GameState;
+import dev.quan.minesweeper.states.LevelState;
+import dev.quan.minesweeper.states.MenuState;
 import dev.quan.minesweeper.states.State;
 import dev.quan.minesweeper.ui.MouseClick;
 import dev.quan.minesweeper.ui.MouseMove;
@@ -28,6 +30,8 @@ public class Game implements Runnable{
 	
 	// STATE
 	private State gameState;
+	private State menuState;
+	private State levelState;
 	
 	// MOUSE MANAGER
 	private MouseMove mouseMove;
@@ -51,7 +55,10 @@ public class Game implements Runnable{
 		
 		//SET THE STATE OF THE GAME
 		gameState = new GameState(handler);
-		State.setState(gameState);
+		menuState = new MenuState(handler);
+		levelState = new LevelState(handler);
+		State.setState(menuState);
+		mouseClick.setState(menuState);
 		handler.getDisplay().createDisplay();
 
 		display.getJFrame().addMouseMotionListener(mouseMove);
@@ -98,7 +105,7 @@ public class Game implements Runnable{
 	
 	//TICK METHOD
 	public void tick() {
-		
+
 	}
 	
 	// RENDER METHOD
@@ -144,6 +151,18 @@ public class Game implements Runnable{
 
 	public MouseClick getMouseClick(){
 		return mouseClick;
+	}
+
+	public State getGameState(){
+		return gameState;
+	}
+
+	public State getLevelState(){
+		return levelState;
+	}
+
+	public State getMenuState(){
+		return menuState;
 	}
 
 }
