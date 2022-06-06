@@ -17,6 +17,7 @@ public class GameState extends State{
 	public GameState(Handler handler) {
 		super(handler);
 <<<<<<< HEAD
+<<<<<<< HEAD
 	}
 
 	public void setLevel(int count){
@@ -28,6 +29,10 @@ public class GameState extends State{
 		else
 			board = new Board_Small(handler);
 		Board.setBoard(board);
+=======
+		board = new Board(handler);
+		handler.getGame().getMouseClick().setBoard(board);
+>>>>>>> master
 =======
 		board = new Board(handler);
 		handler.getGame().getMouseClick().setBoard(board);
@@ -61,6 +66,9 @@ public class GameState extends State{
 		board.render(g);
 		if(!board.getResseter())
 			board.isVictory();
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 	}
 

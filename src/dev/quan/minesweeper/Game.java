@@ -125,6 +125,9 @@ public class Game implements Runnable{
 		g.clearRect(0, 0, width, height);
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, width, height);
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 		
 		if(State.getState() != null)
@@ -169,6 +172,10 @@ public class Game implements Runnable{
 
 	public State getMenuState(){
 		return menuState;
+	}
+
+	public MouseClick getMouseClick(){
+		return mouseClick;
 	}
 
 	public MouseClick getMouseClick(){

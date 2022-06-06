@@ -1,6 +1,7 @@
 package dev.quan.minesweeper.board;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
@@ -109,6 +110,11 @@ public abstract class Board {
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+=======
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+>>>>>>> master
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.Date;
@@ -390,6 +396,7 @@ public class Board {
 	// Getter and setter
 	public boolean getResseter(){
 		return resetter;
+<<<<<<< HEAD
 >>>>>>> master
 	}
 	
@@ -399,6 +406,8 @@ public class Board {
 		if(totalRevealed()+totalBomb==cols*rows){
 			victory = true;
 		}
+=======
+>>>>>>> master
 	}
 
     // Total cell that is reveal

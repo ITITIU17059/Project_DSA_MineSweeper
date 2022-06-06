@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import dev.quan.minesweeper.states.State;
 
 // A CLASS FOR MOUSE CLICK
@@ -19,12 +20,25 @@ public class MouseClick implements MouseListener{
 	private int mouseX, mouseY;
 	private Board board;
 >>>>>>> master
+=======
+import dev.quan.minesweeper.board.Board;
+
+// A CLASS FOR MOUSE CLICKclear
+public class MouseClick implements MouseListener{
+
+	private int mouseX, mouseY;
+	private Board board;
+>>>>>>> master
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
 		if(e.getClickCount()==2){
 <<<<<<< HEAD
+<<<<<<< HEAD
 			state.mouseClicked(e);
+=======
+			board.mouseClicked(e);
+>>>>>>> master
 =======
 			board.mouseClicked(e);
 >>>>>>> master
@@ -35,11 +49,14 @@ public class MouseClick implements MouseListener{
 	@Override
 	public void mousePressed(MouseEvent e) {
 <<<<<<< HEAD
+<<<<<<< HEAD
 		if(e.getButton() == MouseEvent.BUTTON1) // left mouse
 			state.mouseLeftPressed(e);
 		else if(e.getButton() == MouseEvent.BUTTON3) // right mouse
 			state.mouseRightPressed(e);
 =======
+=======
+>>>>>>> master
 		mouseX = e.getX();
 		mouseY = e.getY();
 		
@@ -47,6 +64,9 @@ public class MouseClick implements MouseListener{
 			board.mouseLeftPressed(e);
 		else if(e.getButton() == MouseEvent.BUTTON3) // right mouse
 			board.mouseRightPressed(e);
+<<<<<<< HEAD
+>>>>>>> master
+=======
 >>>>>>> master
 	}
 
@@ -69,8 +89,13 @@ public class MouseClick implements MouseListener{
 	}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 	public void setState(State state){
 		this.state = state;
+=======
+	public void setBoard(Board board){
+		this.board = board;
+>>>>>>> master
 =======
 	public void setBoard(Board board){
 		this.board = board;
