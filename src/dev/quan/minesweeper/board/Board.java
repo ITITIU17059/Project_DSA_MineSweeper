@@ -13,7 +13,7 @@ public abstract class Board {
     protected int w = 50;
     protected static boolean happiness;
     protected int sec = 0;
-    protected static Cell[][] grid;
+    protected Cell[][] grid;
     protected boolean fLag_mark;
 	protected int flagX = 5;
 	protected int flagY = 5;
@@ -63,7 +63,7 @@ public abstract class Board {
 	public abstract boolean inUndo(int x, int y);
 
    	// Game over function
-	public static void gameOver(){
+	public static void gameOver(Cell[][] grid){
 		happiness = false;
 		defeat = true;
 		for(int i=0; i<cols; i++){
@@ -73,8 +73,7 @@ public abstract class Board {
 		}
     }
 
-    // reset function
-	public void resetAll(){
+    public void resetAll(){
 		resetter = true;
 
 		startDate = new Date();
@@ -86,6 +85,7 @@ public abstract class Board {
 		defeat = false;
 		stackGrid.clear();
 		stackList.clear();
+
 		setup();
 
 		resetter = false;
@@ -136,7 +136,7 @@ public abstract class Board {
 					    stackGrid.push(a);
 					}
 					if(grid[i][j].getHasBomb() && !grid[i][j].getIsFlag()){
-						gameOver();
+						gameOver(grid);
 						stackGrid.clear();
 						stackList.clear();
 					}

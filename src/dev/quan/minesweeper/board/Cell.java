@@ -32,7 +32,7 @@ public class Cell {
     private Board Board;
 
     // bomb image
-    private BufferedImage bombImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\bomb.png");
+    private BufferedImage bombImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\bomb3.png");
     
     // Constructor
     public Cell(int i, int j, int w){
@@ -82,7 +82,7 @@ public class Cell {
                     }
                     if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
                         neighbor.revealed = true;
-                        Board.gameOver();
+                        Board.gameOver(grid);
                     }
                 }
             }
@@ -157,8 +157,8 @@ public class Cell {
             // Draw bombs
             if(hasbomb){
                 g.setColor(Color.black);
-                g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
-                // g.drawImage(bombImage, x, y+80, w, w, null);
+                g.fillRect(x, y+80, w, w);
+                g.drawImage(bombImage, (int)(x + w*0.05), (int)(y+80+w*0.05), (int)(w*0.9), (int)(w*0.9), null);
             }
             else{
 
