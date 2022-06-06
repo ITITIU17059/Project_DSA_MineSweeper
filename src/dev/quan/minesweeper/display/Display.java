@@ -14,11 +14,8 @@ public class Display {
 	private String title;
 	private int width, height;
 	
-	public Display(String title, int width, int height) {
+	public Display(String title) {
 		this.title = title;
-		this.width = width;
-		this.height = height;
-		createDisplay();
 	}
 	
 	public void createDisplay() {
@@ -33,7 +30,6 @@ public class Display {
 		canvas.setPreferredSize(new Dimension(width,height));
 		canvas.setMaximumSize(new Dimension(width,height));
 		canvas.setMinimumSize(new Dimension(width,height));
-		canvas.setFocusable(true);
 		
 		frame.add(canvas);
 		frame.pack();
@@ -45,6 +41,22 @@ public class Display {
 	
 	public JFrame getJFrame() {
 		return frame;
+	}
+
+	public int getWidth(){
+		return width;
+	}
+
+	public int getHeight(){
+		return height;
+	}
+
+	public void setWidth(int width){
+		this.width = width;
+	}
+
+	public void setHeight(int height){
+		this.height = height;
 	}
 	
 }

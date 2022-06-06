@@ -4,9 +4,16 @@ package dev.quan.minesweeper;
 public class Launcher {
 
 	public static void main(String[] args) {
+<<<<<<< HEAD
+<<<<<<< HEAD
+		Game game = new Game("MineSweeper");
+=======
 		Game game = new Game("MineSweeper", 1500, 880);
+>>>>>>> master
+=======
+		Game game = new Game("MineSweeper", 1500, 880);
+>>>>>>> master
 		game.start();
-
 	}
 
 }
