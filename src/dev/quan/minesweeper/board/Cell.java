@@ -3,11 +3,14 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.util.Random;
+<<<<<<< HEAD
 import java.util.Stack;
 
 import dev.quan.minesweeper.gfx.ImageLoader;
 
 import java.awt.image.BufferedImage;
+=======
+>>>>>>> master
 
 public class Cell {
 
@@ -25,6 +28,7 @@ public class Cell {
     // Flag variables
     private int flag;
     private boolean isFlag;
+<<<<<<< HEAD
 
     public static Stack<int[]> undoCell = new Stack<int[]>();
     public static int count = 0;
@@ -37,6 +41,9 @@ public class Cell {
     // flag image
     private BufferedImage flagImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\flag.png");
 
+=======
+    
+>>>>>>> master
     // Constructor
     public Cell(int i, int j, int w){
         this.i = i;
@@ -44,7 +51,10 @@ public class Cell {
         this.x = i*w;
         this.y = j*w;
         this.w = w;
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
         this.neighborCount = 0;
     }
 
@@ -54,10 +64,17 @@ public class Cell {
     }
 
     // Make the cell revealed
+<<<<<<< HEAD
     public void reveal(int rows, int cols, Cell[][] grid){
         revealed = true;
         if(neighborCount == 0){
             floodFill(rows, cols, grid);
+=======
+    public void reveal(){
+        revealed = true;
+        if(neighborCount == 0){
+            floodFill();
+>>>>>>> master
         }
     }
 
@@ -70,11 +87,16 @@ public class Cell {
     }
 
     // Expand the cell function
+<<<<<<< HEAD
     public void floodFill(int rows, int cols, Cell[][] grid){
+=======
+    public void floodFill(){
+>>>>>>> master
         for(int xOff=-1; xOff<=1; xOff++){
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
+<<<<<<< HEAD
                 if(a>-1 && a<cols && b>-1 && b<rows){
                     Cell neighbor = grid[a][b];
                     if(!neighbor.hasbomb && !neighbor.revealed && !neighbor.isFlag){
@@ -86,6 +108,16 @@ public class Cell {
                     if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
                         neighbor.revealed = true;
                         Board.gameOver(grid);
+=======
+                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
+                    Cell neighbor = Board.grid[a][b];
+                    if(!neighbor.hasbomb && !neighbor.revealed && !neighbor.isFlag){
+                        neighbor.reveal();
+                    }
+                    if(!neighbor.hasbomb && !neighbor.revealed && neighbor.isFlag){
+                        neighbor.revealed = true;
+                        Board.gameOver();
+>>>>>>> master
                     }
                 }
             }
@@ -93,7 +125,11 @@ public class Cell {
     }
     
     // Return the total neighbor's bomb 
+<<<<<<< HEAD
     public int countBombs(int rows, int cols, Cell[][] grid){
+=======
+    public int countBombs(){
+>>>>>>> master
         if(hasbomb){
             neighborCount = 0;
             return neighborCount;
@@ -105,8 +141,13 @@ public class Cell {
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
+<<<<<<< HEAD
                 if(a>-1 && a<cols && b>-1 && b<rows){
                     Cell neighbor = grid[a][b];
+=======
+                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
+                    Cell neighbor = Board.grid[a][b];
+>>>>>>> master
                     if(neighbor.hasbomb)
                         total++;
                 }
@@ -117,7 +158,11 @@ public class Cell {
     }
 
     // Return the total neighbor's flag 
+<<<<<<< HEAD
     public int countFlags(int rows, int cols, Cell[][] grid){
+=======
+    public int countFlags(){
+>>>>>>> master
         if(hasbomb){
             flag = 0;
             return flag;
@@ -129,8 +174,13 @@ public class Cell {
             for(int yOff=-1; yOff<=1; yOff++){
                 int a = i + xOff;
                 int b = j + yOff;
+<<<<<<< HEAD
                 if(a>-1 && a<cols && b>-1 && b<rows){
                     Cell neighbor = grid[a][b];
+=======
+                if(a>-1 && a<Board.cols && b>-1 && b<Board.rows){
+                    Cell neighbor = Board.grid[a][b];
+>>>>>>> master
                     if(neighbor.isFlag)
                         total++;
                 }
@@ -153,15 +203,23 @@ public class Cell {
         // Draw flags
         if(isFlag){
             g.setColor(Color.green);
+<<<<<<< HEAD
             g.drawImage(flagImage, (int)(x-8), (int)(y+72), (int)(w+20), (int)(w+20), null);
+=======
+            g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
+>>>>>>> master
         }
         if(revealed){
             
             // Draw bombs
             if(hasbomb){
                 g.setColor(Color.black);
+<<<<<<< HEAD
                 g.fillRect(x, y+80, w, w);
                 g.drawImage(bombImage, (int)(x + w*0.05), (int)(y+80+w*0.05), (int)(w*0.9), (int)(w*0.9), null);
+=======
+                g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
+>>>>>>> master
             }
             else{
 
@@ -224,10 +282,13 @@ public class Cell {
         return revealed;
     }
 
+<<<<<<< HEAD
     public void setRevealed(boolean revealed){
         this.revealed = revealed;
     }
 
+=======
+>>>>>>> master
     public int getNeighborCount(){
         return neighborCount;
     }

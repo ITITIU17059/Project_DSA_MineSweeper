@@ -117,9 +117,15 @@ public class Game implements Runnable{
 		}
 		g = bs.getDrawGraphics();
 		
+<<<<<<< HEAD
 		g.clearRect(0, 0, handler.getDisplay().getWidth(), handler.getDisplay().getHeight());
 		g.setColor(Color.BLACK);
 		g.fillRect(0, 0, handler.getDisplay().getWidth(), handler.getDisplay().getHeight());
+=======
+		g.clearRect(0, 0, width, height);
+		g.setColor(Color.BLACK);
+		g.fillRect(0, 0, width, height);
+>>>>>>> master
 		
 		if(State.getState() != null)
 			State.getState().render(g);
@@ -163,6 +169,10 @@ public class Game implements Runnable{
 
 	public State getMenuState(){
 		return menuState;
+	}
+
+	public MouseClick getMouseClick(){
+		return mouseClick;
 	}
 
 }
