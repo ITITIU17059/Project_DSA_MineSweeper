@@ -5,9 +5,13 @@ import java.util.Date;
 import java.util.Random;
 import java.util.Stack;
 import java.awt.event.MouseEvent;
+import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.image.BufferedImage;
 
 import dev.quan.minesweeper.Handler;
+import dev.quan.minesweeper.gfx.ImageLoader;
+import dev.quan.minesweeper.states.State;
 
 public abstract class Board {
     protected int w = 50;
@@ -28,15 +32,22 @@ public abstract class Board {
 	protected Stack<int[]> stackGrid;
 	protected Stack<Integer> stackList;
 
+	// undo image
+	 protected BufferedImage undoImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\undo1.png");
+
     // Handler
 	protected Handler handler;
 
-    	// Win condition
+    // Win condition
 	protected boolean victory = false;
 	protected static boolean defeat = false;
 
-    	// Reset variable
+    // Reset variable
 	protected boolean resetter = false;
+
+	// button
+	protected BufferedImage homeButton = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\home.png");
+	protected BufferedImage levelButton = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\level.png");
 
     public Board(Handler handler, int cols, int rows){
         this.handler = handler;
@@ -61,6 +72,10 @@ public abstract class Board {
     public abstract void render(Graphics g);
 
 	public abstract boolean inUndo(int x, int y);
+
+	public abstract boolean inHome(int x, int y);
+
+	public abstract boolean inLevel(int x, int y);
 
    	// Game over function
 	public static void gameOver(Cell[][] grid){
@@ -123,6 +138,21 @@ public abstract class Board {
 		}
 	}
 
+	public void changeState(int i){
+		handler.getDisplay().getJFrame().setSize(1601,881);
+		handler.getDisplay().getCanvas().setPreferredSize(new Dimension(901,331));
+		handler.getDisplay().getCanvas().setFocusable(true);
+		handler.getDisplay().getJFrame().setLocationRelativeTo(null);
+		if(i==1){
+			State.setState(handler.getGame().getMenuState());
+        	handler.getGame().getMouseClick().setState(handler.getGame().getMenuState());
+		}
+		else{
+			State.setState(handler.getGame().getLevelState());
+        	handler.getGame().getMouseClick().setState(handler.getGame().getLevelState());
+		}
+	}
+
     // Left mouse press
 	public void mouseLeftPressed(MouseEvent e){
 		for(int i=0; i<cols; i++){
@@ -148,6 +178,12 @@ public abstract class Board {
 		
 		if(inUndo(e.getX(), e.getY()))
 			undo();
+
+		if(inHome(e.getX(), e.getY()))
+			changeState(1);
+
+		if(inLevel(e.getX(), e.getY()))
+			changeState(2);
 	}
 
     // Right mouse press

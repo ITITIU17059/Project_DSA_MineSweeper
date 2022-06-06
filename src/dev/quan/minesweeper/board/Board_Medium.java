@@ -20,10 +20,23 @@ public class Board_Medium extends Board{
 	private int timeY = 5;
 
 	//undo variables
-	private int undoX = 812;
+	private int undoX = 807;
 	private int undoY = 80;
 	private int undoCenterX = undoX + 37;
 	private int undoCenterY = undoY + 37;
+
+	// home variables
+	private int homeX = 697;
+	private int homeY = 100;
+	private int homeCenterX = homeX + 150;
+	private int homeCenterY = homeY + 150;
+
+	// level variables
+	private int levelX = 695;
+	private int levelY = 220;
+	private int levelCenterX = levelX + 150;
+	private int levelCenterY = levelY + 150;
+
 	
 
 	public Board_Medium(Handler handler){
@@ -31,7 +44,7 @@ public class Board_Medium extends Board{
 		totalBomb = 40;
 		totalFlag = totalBomb;
 		startDate = new Date();
-		handler.getDisplay().getJFrame().setSize(901,571);
+		handler.getDisplay().getJFrame().setSize(901,921);
 		handler.getDisplay().getCanvas().setPreferredSize(new Dimension(901,331));
 		handler.getDisplay().getCanvas().setFocusable(true);
 		handler.getDisplay().getJFrame().setLocationRelativeTo(null);
@@ -58,13 +71,32 @@ public class Board_Medium extends Board{
 			return true;
 		return false;
 	}
+
+	// Check if the mouse is in home button
+	public boolean inHome(int x, int y){
+		int dif = (int)Math.sqrt(Math.abs(x-homeCenterX)*Math.abs(x-homeCenterX)+
+		Math.abs(y-homeCenterY)*Math.abs(y-homeCenterY));
+		if(dif<35)
+			return true;
+		return false;
+	}
+
+	// Check if the mouse is in level button
+	public boolean inLevel(int x, int y){
+		int dif = (int)Math.sqrt(Math.abs(x-levelCenterX)*Math.abs(x-levelCenterX)+
+		Math.abs(y-levelCenterY)*Math.abs(y-levelCenterY));
+		if(dif<35)
+			return true;
+		return false;
+	}
 	
 	public void render(Graphics g) {
 		
 		// Draw the cell
 		for(int i=0; i<cols; i++){
 			for(int j=0; j<rows; j++){
-				grid[i][j].render(g);
+				if(grid[i][j]!=null)
+					grid[i][j].render(g);
 			}
 		}
 
@@ -124,7 +156,12 @@ public class Board_Medium extends Board{
 			g.drawString(Integer.toString(totalFlag), flagX, flagY+65);
 
 		// undo button painting
-		g.setColor(Color.white);
-		g.fillOval(undoX, undoY, 74, 74);
+		g.drawImage(undoImage,undoX, undoY, 74, 74,null);
+
+		// home button painting
+		g.drawImage(homeButton,homeX, homeY, 300, 300,null);
+		
+		// level button painting
+		g.drawImage(levelButton,levelX, levelY, 300, 300,null);
 	}
 }

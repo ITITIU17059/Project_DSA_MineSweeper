@@ -34,6 +34,9 @@ public class Cell {
     // bomb image
     private BufferedImage bombImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\bomb3.png");
     
+    // flag image
+    private BufferedImage flagImage = ImageLoader.loadImage("C:\\Users\\darkq\\OneDrive\\Máy tính\\2021-2022 Sem 2\\Data structure\\Project_v2\\Project_DSA_MineSweeper\\res\\textures\\flag.png");
+
     // Constructor
     public Cell(int i, int j, int w){
         this.i = i;
@@ -150,7 +153,7 @@ public class Cell {
         // Draw flags
         if(isFlag){
             g.setColor(Color.green);
-            g.fillOval((int)(x + w*0.25), (int)(y+80+w*0.25), (int)(w*0.5), (int)(w*0.5));
+            g.drawImage(flagImage, (int)(x-8), (int)(y+72), (int)(w+20), (int)(w+20), null);
         }
         if(revealed){
             
